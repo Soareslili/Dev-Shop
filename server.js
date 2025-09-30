@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use('/produtos', productRoutes);
 
-// Testar se a variável de ambiente está vindo corretamente
+
 console.log("🔍 URI do Mongo:", process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI, {
