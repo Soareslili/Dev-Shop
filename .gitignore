@@ -16,3 +16,4 @@ build/
 # Outros arquivos temporários
 .DS_Store
 .vscode/
+.vercel

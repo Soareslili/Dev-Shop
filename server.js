@@ -7,26 +7,17 @@ const productRoutes = require('./routes/productRoutes');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
-
 app.use('/produtos', productRoutes);
 
+app.get('/', (req, res) => res.send('API rodando 🚀'));
 
-console.log("🔍 URI do Mongo:", process.env.MONGO_URI);
+if (!mongoose.connection.readyState) {
+  mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('🟢 Conectado ao MongoDB'))
+    .catch(err => console.log('🔴 Erro MongoDB:', err.message));
+}
 
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => {
-    console.log('🟢 Conectado ao MongoDB');
-    app.listen(PORT, () => {
-        console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
-    });
-})
-.catch((err) => {
-    console.log('🔴 Erro ao conectar no MongoDB:', err.message);
-});
+module.exports = app;
